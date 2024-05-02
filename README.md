@@ -9,6 +9,13 @@ npm run install
 npm run dev
 ```
 
+## users
+
+- jaime
+  - password: password1
+- fulano
+  - password: password2
+
 ## Dataset from [Kaggle](https://www.kaggle.com/)
 
 [dataset food nutrition] (https://www.kaggle.com/datasets/joebeachcapital/fast-food)
