@@ -1,7 +1,7 @@
 import type { FormEvent } from "react";
 import { Button, TextField } from "@mui/material";
 
-export default function Login({ onLogin }) {
+export default function Login({ onLogin, error }) {
   async function authenticate(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
@@ -17,6 +17,7 @@ export default function Login({ onLogin }) {
       <Button type="submit" variant="contained">
         Login
       </Button>
+      <div>{error && error}</div>
     </form>
   );
 }

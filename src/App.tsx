@@ -5,6 +5,7 @@ import { request } from "./fns/requests";
 
 function App() {
   const [state, setState] = useState({
+    error: "",
     isAuthenticated: sessionStorage.getItem("jwt") ? true : false,
   });
   async function onLogin(body: { [k: string]: FormDataEntryValue }) {
@@ -22,13 +23,27 @@ function App() {
       }
     } catch (err) {
       console.log(err);
+      if (err?.response?.status === 401) {
+        setState((prev) => ({
+          ...prev,
+          error: "Invalid username or password",
+        }));
+        return;
+      }
+
+      setState((prev) => ({
+        ...prev,
+        error: err?.message,
+      }));
     }
   }
 
   return (
     <>
       <h1>Wortst Fast Food to eat.</h1>
-      {!state.isAuthenticated && <Login onLogin={onLogin} />}
+      {!state.isAuthenticated && (
+        <Login onLogin={onLogin} error={state.error} />
+      )}
       {state.isAuthenticated && <WorstFastFoodByName />}
     </>
   );
