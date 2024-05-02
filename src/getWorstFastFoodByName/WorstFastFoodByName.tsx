@@ -1,5 +1,6 @@
 import VisualizationInsights from "./VisualizationInsights";
 import Filter from "./Filter";
+import ErrorBoundary from "./ErrorBoundary";
 import { Suspense, useState } from "react";
 
 export default function WorstFastFoodByName() {
@@ -17,17 +18,25 @@ export default function WorstFastFoodByName() {
         name="foodName"
         label="Type a food name and press enter."
       />
-      <Suspense
+      <ErrorBoundary
         fallback={
-          <h2
-            style={{ display: "flex", alignItems: "center", height: "300px" }}
-          >
-            Loading data for chart...
-          </h2>
+          <h3>
+            Not Authorized or invalid token, you need to login in one second.
+          </h3>
         }
       >
-        <VisualizationInsights foodName={foodName} />
-      </Suspense>
+        <Suspense
+          fallback={
+            <h2
+              style={{ display: "flex", alignItems: "center", height: "300px" }}
+            >
+              Loading data for chart...
+            </h2>
+          }
+        >
+          <VisualizationInsights foodName={foodName} />
+        </Suspense>
+      </ErrorBoundary>
     </section>
   );
 }
