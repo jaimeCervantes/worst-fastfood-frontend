@@ -1,5 +1,5 @@
-type Input<T> = Promise<T> & { status?: string; result?: T; error?: Error };
-export function useResultOrThrowPromiseOrError<T>(promise: Input<T>) {
+type Result<T> = Promise<T> & { status?: string; result?: T; error?: Error };
+export function useResultOrThrowPromiseOrError<T>(promise: Result<T>) {
   if (promise.status === "fulfilled") {
     return promise.result;
   } else if (promise.status === "rejected") {
@@ -11,7 +11,6 @@ export function useResultOrThrowPromiseOrError<T>(promise: Input<T>) {
 
     promise
       .then((result) => {
-        console.log("save result on success");
         promise.status = "fulfilled";
         promise.result = result;
       })
@@ -20,7 +19,6 @@ export function useResultOrThrowPromiseOrError<T>(promise: Input<T>) {
         promise.error = error;
       });
 
-    console.log("throw promise");
     throw promise;
   }
 }

@@ -4,7 +4,9 @@ import { useState } from "react";
 import { request } from "./fns/requests";
 
 function App() {
-  const [state, setState] = useState({ isAuthenticated: false });
+  const [state, setState] = useState({
+    isAuthenticated: sessionStorage.getItem("jwt") ? true : false,
+  });
   async function onLogin(body: { [k: string]: FormDataEntryValue }) {
     try {
       const result = await request({
@@ -25,7 +27,7 @@ function App() {
 
   return (
     <>
-      <h1>Las peores FastFood que no debes comer</h1>
+      <h1>Wortst Fast Food to eat.</h1>
       {!state.isAuthenticated && <Login onLogin={onLogin} />}
       {state.isAuthenticated && <WorstFastFoodByName />}
     </>
